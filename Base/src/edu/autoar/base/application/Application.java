@@ -39,6 +39,7 @@ public class Application {
 			menuBar.print();
 			String sel = Input.getString("선택 : ");
 			try {
+				//메뉴바를 구성안하면 여기서 직접 get(sel)을 통해 menuItem을 받고, execute를 실행
 				menuBar.execute(sel);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

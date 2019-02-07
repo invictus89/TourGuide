@@ -35,7 +35,6 @@ public class TourGuideView {
 			basicPrint(tour);
 		}
 	}
-
 	/**
 	 * <pre>
 	 * 2019. 1. 16.
