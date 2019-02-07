@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.autocar.tourguide.dao.ITourDao">
+
+	<select id="getCount" resultType="int">
+		select count(*) from tour
+	</select>
+
+	<select id="getPage" resultType="Tour" parameterType="map">
+		select *
+		from tour where num between #{start} and #{end} order by num
+	</select>
+
+	<select id="selectList" resultType="Tour">
+		select * from tour order by num
+	</select>
+	<select id="selectDetailed" resultType="Tour" parameterType="int">
+		select * from tour where num = #{num}
+	</select>
+	<select id="selectState" resultType="String">
+		select state as test from tour group by state
+	</select>
+
+	<select id="selectListState" resultType="Tour" parameterType="String">
+		select t1.num, t1.state, t1.site_name, t1.district
+		from tour t1, (
+				select state
+				from tour
+				group by state
+				having state = #{state}
+				) t2
+		where t1.state = t2.state
+		order by t1.state
+	</select>
+
+	<select id="selectOne" resultType="Tour" parameterType="map">
+		select *
+		from tour where #{category} = #{searchName}
+	</select>
+	
+	<select id="selectOneforNum" resultType="Tour"  parameterType="int">
+		select * from tour where num = #{index} 		
+	</select>
+
+	<!-- 1. # : get과 set에 의해서 값이 전달 2. $ : 변수로서 keyword의 이름을 그냥 전달 -->
+	<select id="searchAll" resultType="Tour" parameterType="String">
+		select * from tour 
+		where site_name like '%'||#{searchName}||'%' or
+			state like '%'||#{searchName}||'%' or
+			contents like '%'||#{searchName}||'%'
+		order by num
+		<!-- select * from tour where site_name like '%${searchName}%' -->
+	</select>
+</mapper>
